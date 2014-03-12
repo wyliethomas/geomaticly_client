@@ -28,8 +28,10 @@ class Geomaticly
 
 
   def self.apicall
+    #TODO: add api key to URL for security
     #TODO: add geo and lang to URL params?
-    uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/4")
+    uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/4?apikey=1234&lang=en&country=us&state=ut")
+    #uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/4")
     http = Net::HTTP.new(uri.host, uri.port)
     response = http.request(Net::HTTP::Get.new(uri.request_uri))
     json = JSON.parse(response.body)
