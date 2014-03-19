@@ -1,0 +1,12 @@
+defaults: &DEFAULTS
+  geomaticly:
+    apikey: 8CPvTaHycBONEc95
+
+development:
+  <<: *DEFAULTS
+
+test:
+  <<: *DEFAULTS
+
+production:
+  <<: *DEFAULTS

@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController
   def index
-    @geoPage = Geomaticly.getPage
+    I18n.locale = 'en'
+    @geoPage = Geomaticly.page('rvSkxbW3PdgWZwRQ')
   end
 end

@@ -1,20 +1,30 @@
+# Geomaticly (beta)
+# TODO: Make this a gem
+#
+#
+# Author::    Wylie Thomas  (mailto:wylie@wyliethomas.com)
+# Version::   0.0.1
+# Copyright:: Copyright (c) 2014 Quadmodel7, LLC
+#
+# USAGE
+# load your apikey in an initializer, however you prefer to do that.
+# I like to make a config.yml for settings like this.
+#
+# In your controller
+# I18n.locale = 'en'
+# @geoPage = Geomaticly.page('[YOUR PAGE KEY]')
+#
+# In your view
+# <%= @geoPage.[SOME BLOCK TITLE] %>
+
 require 'net/http'
 require 'json'
 require 'ostruct'
 
 class Geomaticly
 
-
-  def testobj
-    item1 = {:headline => "this is the headline", :phone => "111-111-1111"}
-    blob = OpenStruct.new(item1)
-    #obj = test.testobj.name
-    return blob
-  end
-
-  #creates a page object containing all the blocks for this page.
-  def self.page
-    response = apicall
+  def self.page(key)
+    response = apicall(key)
     blocks = {}
     for item in response
       if !item["title"].empty?
@@ -22,16 +32,13 @@ class Geomaticly
         blocks.merge!(block)
       end
     end
-    blob = OpenStruct.new(blocks)
-    return blob
+    data = OpenStruct.new(blocks)
+    return data
   end
 
 
-  def self.apicall
-    #TODO: add api key to URL for security
-    #TODO: add geo and lang to URL params?
-    uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/4?apikey=1234&lang=en&country=us&state=ut")
-    #uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/4")
+  def self.apicall(key)
+    uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/#{key}?apikey=#{APP_CONFIG['geomaticly']['apikey']}&lang=#{I18n.locale}&country=mex")
     http = Net::HTTP.new(uri.host, uri.port)
     response = http.request(Net::HTTP::Get.new(uri.request_uri))
     json = JSON.parse(response.body)
