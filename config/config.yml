@@ -1,12 +1,13 @@
 defaults: &DEFAULTS
-  geomaticly:
-    apikey: 8CPvTaHycBONEc95
 
 development:
-  <<: *DEFAULTS
+  geomaticly:
+    apikey: 8CPvTaHycBONEc95
+  apiurl: 127.0.0.1:3000
 
 test:
-  <<: *DEFAULTS
 
 production:
-  <<: *DEFAULTS
+  geomaticly:
+    apikey: 8CPvTaHycBONEc95
+  apiurl: geo.wyliethomas.com
