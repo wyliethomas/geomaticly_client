@@ -23,12 +23,12 @@ require 'ostruct'
 
 class Geomaticly
 
-  def self.page(key)
-    response = apicall(key)
+  def self.page(key, ip)
+    response = apicall(key, ip)
     blocks = {}
     for item in response
       if !item["title"].empty?
-        block = {item["title"] => item["body"]}
+        block = {item["method"] => item["body"]}
         blocks.merge!(block)
       end
     end
@@ -37,8 +37,8 @@ class Geomaticly
   end
 
 
-  def self.apicall(key)
-    uri = URI.parse("http://#{APP_CONFIG}['apiurl']}/api/v1/pages/#{key}?apikey=#{APP_CONFIG['geomaticly']['apikey']}&lang=#{I18n.locale}&country=mex")
+  def self.apicall(key, ip)
+    uri = URI.parse("http://#{APP_CONFIG['apiurl']}/api/v1/pages/#{key}?apikey=#{APP_CONFIG['geomaticly']['apikey']}&lang=#{I18n.locale}&ip=#{ip}")
     http = Net::HTTP.new(uri.host, uri.port)
     response = http.request(Net::HTTP::Get.new(uri.request_uri))
     json = JSON.parse(response.body)
