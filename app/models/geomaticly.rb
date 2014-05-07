@@ -38,7 +38,7 @@ class Geomaticly
 
 
   def self.apicall(key)
-    uri = URI.parse("http://#{APP_CONFIG}['apiurl']}/api/v1/pages/#{key}?apikey=#{APP_CONFIG['geomaticly']['apikey']}&lang=#{I18n.locale}&country=mex")
+    uri = URI.parse("http://127.0.0.1:3001/api/v1/pages/#{key}?apikey=#{APP_CONFIG['geomaticly']['apikey']}&lang=#{I18n.locale}&ip=192.175.182.26")
     http = Net::HTTP.new(uri.host, uri.port)
     response = http.request(Net::HTTP::Get.new(uri.request_uri))
     json = JSON.parse(response.body)
